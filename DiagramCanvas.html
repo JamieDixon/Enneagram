@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title>Enneagram canvas</title>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/kineticjs/4.7.2/kinetic.min.js"></script>
+	<script>
+	$(function(){
+		var stage = new Kinetic.Stage({
+			container: "container",
+			width: 600,
+			height: 600
+		});
+
+		var layer = new Kinetic.Layer();
+
+		var circle = new Kinetic.Circle({
+			x: stage.getWidth() / 2,
+			y: stage.getHeight() / 2,
+			width: 500,
+			height: 500,
+			stroke: "black",
+			strokWidth: 4,
+		});
+
+		var triangle = new Kinetic.RegularPolygon({
+	        x: stage.getWidth() / 2,
+	        y: stage.getHeight() / 2,
+	        sides: 3,
+	        radius: 245,
+	        stroke: 'black',
+	        strokeWidth: 4
+        });
+
+        var circlePortion = 360 / 9;
+
+        var hexad = new Kinetic.Shape({
+        	drawFunc: function(context){
+        		context.beginPath();
+        		context.moveTo(150, 100);
+        		context.lineTo(530, 200);
+        		context.lineTo(420, 517);
+        		context.lineTo(420, 82);
+        		context.lineTo(72, 200);
+        		context.lineTo(200, 517);
+        		context.closePath();
+        		context.fillStrokeShape(this);
+        	},
+        	stroke: "black",
+        	strokeWidth: 4
+        });
+
+		layer.add(circle);
+		layer.add(triangle);
+		layer.add(hexad);
+
+		stage.add(layer);
+	});
+	</script>
+</head>
+<body>
+	<div id="container"></div>
+</body>
+</html>

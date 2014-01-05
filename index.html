@@ -14,6 +14,10 @@
 	{
 		background: #eff;
 	}
+
+	table table{
+		background: transparent;
+	}
 	</style>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
@@ -44,6 +48,9 @@
 		<th>Lost Childhood Message</th>
 		<th>Spiritual Jumpstart (To be aware of)</th>
 		<th>Core Identification</th>
+		<th>Invitation to abundance</th>
+		<th>Wake-up call</th>
+		<th>Manipulates others...</th>
 	</thead>
 
 	<tbody data-bind="foreach: types">
@@ -63,6 +70,12 @@
 				<li data-bind="text: $data">
 			</ul>
 		</td>
+		<td>
+			<p data-bind="text: invitationToAbundance.message"></p>
+			<p><em data-bind="text: invitationToAbundance.remember"></em>
+		</td>
+		<td data-bind="text: wakeUpCalls"></td>
+		<td data-bind="text: howManipulatesOthers"></td>
 	</tr>
 	</tbody>
 </table>
@@ -71,7 +84,7 @@
 
 <!-- ko foreach: triadicGroups -->
 <h4 data-bind="text: name"></h4>
-<table class="table" data-bind="template: {name: templateName }"></table>
+<table class="table table-striped" data-bind="template: {name: templateName }"></table>
 <!-- /ko -->
 
 <script type="text/html" id="basicTriad">
