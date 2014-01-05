@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+	<title>Enneagram Matrix</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+	<style type="text/css">
+	.container{
+		width: 80%;
+		margin: 0 auto;
+	}
+
+	.table-striped > tbody >tr:nth-child(even) >td, 
+	.table-striped>tbody>tr:nth-child(even) >th
+	{
+		background: #eff;
+	}
+	</style>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
+	<script src="types.js"></script>
+	<script src="groups.js"></script>
+	<script>
+	$(function(){
+		var vm = {
+			types: types,
+			triadicGroups: triadicGroups
+		};
+
+		ko.applyBindings(vm);
+	});
+	</script>
+</head>
+<body>
+<div class="container">
+<h2>Types</h2>
+<table class="table table-striped table-bordered fullInfo">
+	<thead>
+		<th>#</th>
+		<th>Passion</th>
+		<th>Basic Fear</th>
+		<th>Basic Desire</th>
+		<th>Basic Desire Disintegrated</th>
+		<th>Unconscious Childhood Message</th>
+		<th>Lost Childhood Message</th>
+		<th>Spiritual Jumpstart (To be aware of)</th>
+		<th>Core Identification</th>
+	</thead>
+
+	<tbody data-bind="foreach: types">
+	<tr>
+		<th data-bind="text: number"></th>
+		<td data-bind="text: passion"></td>
+		<td data-bind="text: basicFear"></td>
+		<td data-bind="text: basicDesire"></td>
+		<td data-bind="text: basicDesireDist"></td>
+		<td data-bind="text: unconChildhoodMsg"></td>
+		<td data-bind="text: lostChildhoodMsg"></td>
+		<td data-bind="text: spiritualJumpStart"></td>
+		<td>
+			<p>Identified powerfully with <span data-bind="text: coreIdentification.identifiesPowerfullyWith"></span></p>
+			<p>To sustain the self image of being:</p>
+			<ul data-bind="foreach: coreIdentification.toSustainSelfImageOfBeing">
+				<li data-bind="text: $data">
+			</ul>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+<h2>Triadic Groups</h2>
+
+<!-- ko foreach: triadicGroups -->
+<h4 data-bind="text: name"></h4>
+<table class="table" data-bind="template: {name: templateName }"></table>
+<!-- /ko -->
+
+<script type="text/html" id="basicTriad">
+<thead>
+		<tr>
+			<th>Group</th>
+			<th>Members</th>
+			<th>Description</th>
+			<th>Concerned with</th>
+			<th>Have issues with</th>
+			<th>Seeks</th>
+			<th>Underlying feeling</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: groups">
+		<tr>
+			<th data-bind="text: name"></th>
+			<td data-bind="text: members"></td>
+			<td data-bind="text: description"></td>
+			<td data-bind="text: concernedWith"></td>
+			<td data-bind="text: haveIssuesWith"></td>
+			<td data-bind="text: seeks"></td>
+			<td data-bind="text: underlyingFeeling"></td>
+		</tr>
+	</tbody>
+</script>
+
+<script type="text/html" id="hornevian">
+<thead>
+	<tr>
+		<th>Group</th>
+		<th>Members</th>
+		<th>Description</th>
+		<th>Strategy to meet needs</th>
+	</tr>
+</thead>
+
+<tbody data-bind="foreach: groups">
+	<tr>
+		<th data-bind="text: name"></th>
+		<td data-bind="text: members"></td>
+		<td data-bind="text: description"></td>
+		<td data-bind="text: strategyToMeetNeeds"></td>
+	</tr>
+</tbody>
+</script>
+
+<script type="text/html" id="motivationalDir">
+<tbody>
+	<!-- ko foreach: groups -->
+	<tr>
+		<th data-bind="text: name"></th>
+
+		<td>
+			<table class="table">
+			<thead>
+				<tr>
+					<th>Number</th>
+					<th>Motivational Direction</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: members">
+			<tr>
+				<td data-bind="text: number"></td>
+				<td data-bind="text: motivationDirection"></td>
+				<td data-bind="text: description"></td>
+			</tr>
+			</tbody>
+			</table>
+		</td>
+	</tr>
+	<!-- /ko -->
+</tbody>
+</script>
+
+<script type="text/html" id="harmonic">
+<tbody data-bind="foreach: groups">
+	<th data-bind="text: name"></th>
+	<td>
+			<table class="table">
+			<thead>
+				<tr>
+					<th>Number</th>
+					<th>At a glance</th>
+					<!-- ko foreach: mainThemesTitles -->
+						<th data-bind="text: $data"></th>
+					<!-- /ko -->
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: members">
+			<tr>
+				<td data-bind="text: number"></td>
+				<td data-bind="text: atAGlance"></td>
+				<!-- ko foreach: themes -->
+					<td data-bind="text: $data"></td>
+				<!-- /ko -->
+			</tr>
+			</tbody>
+			</table>
+		</td>
+</tbody
+</script>
+
+</div>
+</body>
+</html>
