@@ -57,8 +57,8 @@
 		var strokeWidth = 1;
 		var stage = new Kinetic.Stage({
 			container: "container",
-			width: 600,
-			height: 600
+			width: 900,
+			height: 900
 		});
 
 		var layer = new Kinetic.Layer();
@@ -81,7 +81,8 @@
 
 		//var nineRad = 300 * Math.PI /2//-1.57;
 
-		var hexadDegreePoints = [130, 20, 300, 50, 160, 240];
+		var numberDegreePonts = [90, 50, 10, 330, 290, 250, 210, 170, 130];
+		var hexadDegreePoints = [130, 10, 290, 50, 170, 250];
 
         var triangle = createTriangle(circle.getWidth / 2);
         var hexad = createHexad(circle.getWidth() / 2);
@@ -106,6 +107,30 @@
 			if(circle.getWidth() > 500)
 			{
 				this.stop();
+				var radius = (circle.getWidth() / 2) + 40;
+				for(var i = 0; i < numberDegreePonts.length; i++)
+				{
+					var rad = degreeToRad(numberDegreePonts[i]);
+	        		var x = cX + radius * Math.cos(rad);
+	        		var y = cY + radius * Math.sin(rad);
+
+	        		var text = i > 0 ? i : numberDegreePonts.length;
+	        		/*layer.add(new Kinetic.Text({
+	        			x: x,
+	        			y: y,
+	        			text: text,
+	        			fontSize: 20,
+	        			fill: "black"
+	        		}));
+*/
+					layer.add(new Kinetic.Circle({
+						x: x,
+						y: y,
+						width: 50,
+						height: 50,
+						strokeWidth: strokeWidth,
+					}));
+				}
 			}
 		}, layer);
 
