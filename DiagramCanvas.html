@@ -6,56 +6,13 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/kineticjs/4.7.2/kinetic.min.js"></script>
 	<script>
 	$(function(){
-		var strokeWidth = 1;
-		var stage = new Kinetic.Stage({
-			container: "container",
-			width: 600,
-			height: 600
-		});
-
-		var layer = new Kinetic.Layer();
-
-		var circle = new Kinetic.Circle({
-			x: stage.getWidth() / 2,
-			y: stage.getHeight() / 2,
-			width: 300,
-			height: 300,
-			stroke: "black",
-			strokWidth: strokeWidth,
-		});
-
-
-		var circRadius = circle.getWidth() / 2;
-		var cX = stage.getWidth() / 2;
-		var cY = stage.getHeight() / 2;
-
-		var degreeInterval = 380 / 9;
-
-		//var nineRad = 300 * Math.PI /2//-1.57;
-
-		var hexadDegreePoints = [130, 20, 300, 50, 160, 240];
-
 		function degreeToRad(degree)
 		{
 			degree = 360 - degree;
 			return degree * 0.01745329252;
 		}
 
-		var nineRad = degreeToRad(90);
-
-		var nineX = cX + circRadius * Math.cos(nineRad);
-		var nineY = cY + circRadius * Math.sin(nineRad);
-
-		var nineCirc = new Kinetic.Circle({
-			x: nineX,
-			y: nineY,
-			width: 50,
-			height: 50,
-			stroke: "black",
-			strokeWidth: strokeWidth
-		});
-
-		
+	
         function createTriangle(radius)
         {
         	return new Kinetic.RegularPolygon({
@@ -71,31 +28,60 @@
         function createHexad(radius)
         {
         	return new Kinetic.Shape({
-        	drawFunc: function(context){
-        		context.beginPath();
+	        	drawFunc: function(context){
+	        		context.beginPath();
 
-        		var rad = degreeToRad(hexadDegreePoints[0]);
+	        		var rad = degreeToRad(hexadDegreePoints[0]);
 
-        		var x = cX + radius * Math.cos(rad);
-        		var y = cY + radius * Math.sin(rad);
+	        		var x = cX + radius * Math.cos(rad);
+	        		var y = cY + radius * Math.sin(rad);
 
-        		context.moveTo(x, y);
+	        		context.moveTo(x, y);
 
-        		for(var i = 1; i < hexadDegreePoints.length; i++)
-        		{
-        			rad = degreeToRad(hexadDegreePoints[i]);
-        			x = cX + radius * Math.cos(rad);
-        			y = cY + radius * Math.sin(rad);
-        			context.lineTo(x, y);
-        		}        		
+	        		for(var i = 0; i < hexadDegreePoints.length; i++)
+	        		{
+	        			rad = degreeToRad(hexadDegreePoints[i]);
+	        			x = cX + radius * Math.cos(rad);
+	        			y = cY + radius * Math.sin(rad);
+	        			context.lineTo(x, y);
+	        		}        		
 
-        		context.closePath();
-        		context.fillStrokeShape(this);
-        	},
-        	stroke: "black",
-        	strokeWidth: strokeWidth
-        });
+	        		context.closePath();
+	        		context.fillStrokeShape(this);
+	        	},
+	        	stroke: "black",
+	        	strokeWidth: strokeWidth
+        	});
         }
+
+		var strokeWidth = 1;
+		var stage = new Kinetic.Stage({
+			container: "container",
+			width: 600,
+			height: 600
+		});
+
+		var layer = new Kinetic.Layer();
+
+		var circle = new Kinetic.Circle({
+			x: stage.getWidth() / 2,
+			y: stage.getHeight() / 2,
+			width: 100,
+			height: 100,
+			stroke: "black",
+			strokWidth: strokeWidth,
+		});
+
+
+		var circRadius = circle.getWidth() / 2;
+		var cX = stage.getWidth() / 2;
+		var cY = stage.getHeight() / 2;
+
+		var degreeInterval = 380 / 9;
+
+		//var nineRad = 300 * Math.PI /2//-1.57;
+
+		var hexadDegreePoints = [130, 20, 300, 50, 160, 240];
 
         var triangle = createTriangle(circle.getWidth / 2);
         var hexad = createHexad(circle.getWidth() / 2);
@@ -110,14 +96,12 @@
 			circle.setWidth(circle.getWidth() + 1);
 			circle.setHeight(circle.getHeight() + 1);
 			
-			triangle.remove();
 			hexad.remove();
-			
-			triangle = createTriangle(circle.getWidth() / 2);
 			hexad = createHexad(circle.getWidth() / 2);
-
-			layer.add(triangle);
 			layer.add(hexad);
+
+			triangle.setRadius(circle.getWidth() / 2);
+			
 
 			if(circle.getWidth() > 500)
 			{
