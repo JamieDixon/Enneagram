@@ -11,7 +11,6 @@
 			degree = 360 - degree;
 			return degree * 0.01745329252;
 		}
-
 	
         function createTriangle(radius)
         {
@@ -53,6 +52,55 @@
 	        	strokeWidth: strokeWidth
         	});
         }
+
+        function createNumbers(placementRadius)
+		{
+				for(var i = 0; i < numberDegreePonts.length; i++)
+				{
+					var rad = degreeToRad(numberDegreePonts[i]);
+	        		var x = cX + placementRadius * Math.cos(rad);
+	        		var y = cY + placementRadius * Math.sin(rad);
+
+	        		var text = i > 0 ? i : numberDegreePonts.length;
+
+	        		var numCircle = new Kinetic.Circle({
+						x: x,
+						y: y,
+						width: 52,
+						height: 52,
+						strokeWidth: strokeWidth,
+						opacity: 0.8
+					});
+
+					numCircle.on("mouseover", function(){
+						this.setFill("orange");
+						layer.draw();
+					});
+
+					numCircle.on("mouseout", function(){
+						this.setFill("white");
+						layer.draw();
+					});
+
+					var numText = new Kinetic.Text({
+	        			x: x,
+	        			y: y,
+	        			text: text,
+	        			fontSize: 20,
+	        			fill: "black",
+	        			align: "center"
+	        		})
+
+	        		numText.setOffset({
+	        			x: numText.getWidth() / 2,
+	        			y: numText.getHeight() / 2
+	        		});
+
+	        		layer.add(numCircle);
+
+	        		layer.add(numText);
+				}
+		}
 
 		var strokeWidth = 1;
 		var stage = new Kinetic.Stage({
@@ -107,30 +155,8 @@
 			if(circle.getWidth() > 500)
 			{
 				this.stop();
-				var radius = (circle.getWidth() / 2) + 40;
-				for(var i = 0; i < numberDegreePonts.length; i++)
-				{
-					var rad = degreeToRad(numberDegreePonts[i]);
-	        		var x = cX + radius * Math.cos(rad);
-	        		var y = cY + radius * Math.sin(rad);
+				createNumbers((circle.getWidth() / 2) + 40);
 
-	        		var text = i > 0 ? i : numberDegreePonts.length;
-	        		/*layer.add(new Kinetic.Text({
-	        			x: x,
-	        			y: y,
-	        			text: text,
-	        			fontSize: 20,
-	        			fill: "black"
-	        		}));
-*/
-					layer.add(new Kinetic.Circle({
-						x: x,
-						y: y,
-						width: 50,
-						height: 50,
-						strokeWidth: strokeWidth,
-					}));
-				}
 			}
 		}, layer);
 
